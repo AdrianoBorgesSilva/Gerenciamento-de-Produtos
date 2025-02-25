@@ -18,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.product_manager.domain.Product;
 import com.example.product_manager.dto.ProductDTO;
+import com.example.product_manager.mapper.ProductMapper;
 import com.example.product_manager.service.ProductService;
 
 import jakarta.validation.Valid;
@@ -58,7 +59,7 @@ public class ProductResource {
 
     @PostMapping
     public ResponseEntity<Void> insert(@Valid @RequestBody ProductDTO productDTO) {
-        Product product = productService.fromDTO(productDTO);
+        Product product = ProductMapper.INSTANCE.toEntity(productDTO);
         product = productService.insert(product);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(product.getId()).toUri();
         return ResponseEntity.created(uri).build();
@@ -72,7 +73,7 @@ public class ProductResource {
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<Void> update(@Valid @RequestBody ProductDTO productDTO, @PathVariable String id) {
-        Product product = productService.fromDTO(productDTO);
+        Product product = ProductMapper.INSTANCE.toEntity(productDTO);
         product.setId(id);
         product = productService.update(product);
         return ResponseEntity.noContent().build();

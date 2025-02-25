@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.product_manager.domain.Product;
-import com.example.product_manager.dto.ProductDTO;
 import com.example.product_manager.exception.ObjectNotFoundException;
 import com.example.product_manager.repository.ProductRepository;
 
@@ -57,9 +56,5 @@ public class ProductService {
         newProduct.setCategory(product.getCategory());
         newProduct.setBrand(product.getBrand());
         newProduct.setStatus(product.getStatus());
-    }
-
-    public Product fromDTO(ProductDTO productDTO) {
-        return new Product(productDTO.getId(), productDTO.getName(), productDTO.getDescription(), productDTO.getPrice(), productDTO.getQuantity(), productDTO.getStatus(), productDTO.getBrand(), productDTO.getCategory());
     }
 }
